@@ -29,14 +29,13 @@ function getURLs(rootURL) {
             console.log(`Could not connect to ${rootURL} to get the data due to error: ${error}`);
         } else {
             let shirtLinks = [];
-            var $ = cheerio.load(body);
+            let $ = cheerio.load(body);
             // Push each link to the array so it can be used in next request
             $(".products li a").each(function(index) {
                 const link = $(this).attr('href');
                 links.push(baseURL + link);
             });
             // Show links array
-            console.log(links.length);
             getShirtInfo(links);
         }
     });
@@ -48,25 +47,20 @@ function getShirtInfo(links) {
         const link = links[i];
         // Date formatting tip taken from http://stackoverflow.com/questions/23593052/format-javascript-date-to-yyyy-mm-dd
         const date = new Date().toISOString().split('T')[0];
-        // Make request
-        // Check body for:
-            // .price
-            // title h1 (exclude .price)
-            // .shirt-picture img
+        // Make request for each link
         request(link, function (error, response, body) {
             if(error) {
                 // Shows error that occurred
                 console.log(`Could not connect to ${link} to get the data due to error: ${error}`);
             } else {
-                var $ = cheerio.load(body);
+                let $ = cheerio.load(body);
                 const price = $(".price").text().trim();
                 // Used method to exclude span tag from http://stackoverflow.com/questions/11347779/jquery-exclude-children-from-text
                 const title = $(".shirt-details h1").clone().find('span').remove().end().text();
-                console.log(title);
                 const imageURL = baseURL + $(".shirt-picture img").attr("src");
 
                 // Make JSON object with properties
-                let newShirt = {
+                const newShirt = {
                     "Title": title,
                     "Price": price,
                     "ImageURL": imageURL,
@@ -86,13 +80,10 @@ function getShirtInfo(links) {
 function makeCSVFromJSON(jsonData) {
     try {
         var result = json2csv({ data: jsonData});
-        console.log(result);
         const date = new Date().toISOString().split('T')[0];
         const filePath = "data/" + date + ".csv";
-
         fs.writeFileSync(filePath, result);
     } catch (err) {
         console.log("Could not convert JSON to CSV");
     }
 }
-
