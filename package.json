@@ -1,0 +1,11 @@
+{
+  "name": "content-scraper",
+  "version": "1.0.0",
+  "description": "A content scraper for the web to get t-shirt info",
+  "main": "scraper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ashley Donohoe",
+  "license": "ISC"
+}
