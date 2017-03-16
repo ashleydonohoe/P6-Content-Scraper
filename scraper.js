@@ -28,6 +28,7 @@ getURLs(rootURL);
 // Used this tutorial: http://www.netinstructions.com/simple-web-scraping-with-node-js-and-javascript/
 function getURLs(rootURL) {
     let links = [];
+    const baseURL = "http://www.shirts4mike.com/";
     request(rootURL, function (error, response, body) {
         if(error) {
             // Shows error that occurred
@@ -38,11 +39,27 @@ function getURLs(rootURL) {
             // Push each link to the array so it can be used in next request
             $(".products li a").each(function(index) {
                 const link = $(this).attr('href');
-                links.push(link);
+                links.push(baseURL + link);
             });
             // Show links array
-            console.log(links);
+            console.log(links.length);
+            getShirtInfo(links);
         }
     });
+}
+
+function getShirtInfo(links) {
+    let jsonData = [];
+    for(let i = 0; i < links.length; i++) {
+        // Make request
+        // Check body for:
+            // price, title, url and image url
+        // Make JSON object with properties
+        // Push JSON object to jsonData array
+    }
+}
+
+function makeCSVFromJSON(jsonData) {
+
 }
 
