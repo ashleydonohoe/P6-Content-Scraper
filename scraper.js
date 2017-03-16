@@ -9,5 +9,40 @@ const cheerio = require('cheerio');
 const request = require('request');
 const json2csv = require('json2csv');
 const fs = require('fs');
+const rootURL = "http://www.shirts4mike.com/shirts.php";
 
+// Checks if the data folder exists and creates it if not
+// Used info from https://blog.raananweber.com/2015/12/15/check-if-a-directory-exists-in-node-js/
+function folderCheck() {
+    try {
+        fs.statSync("data");
+    } catch(error) {
+        fs.mkdirSync("data");
+    }
+}
+
+folderCheck();
+getURLs(rootURL);
+
+// issue request to root site to get the links to t-shirt pages, having each pushes to an array
+// Used this tutorial: http://www.netinstructions.com/simple-web-scraping-with-node-js-and-javascript/
+function getURLs(rootURL) {
+    let links = [];
+    request(rootURL, function (error, response, body) {
+        if(error) {
+            // Shows error that occurred
+            console.log(`Could not connect to ${rootURL} to get the data due to error: ${error}`);
+        } else {
+            let shirtLinks = [];
+            var $ = cheerio.load(body);
+            // Push each link to the array so it can be used in next request
+            $(".products li a").each(function(index) {
+                const link = $(this).attr('href');
+                links.push(link);
+            });
+            // Show links array
+            console.log(links);
+        }
+    });
+}
 
