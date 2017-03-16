@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ashley Donohoe",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "json2csv": "^3.7.3",
+    "website-scraper": "^2.2.2"
+  }
 }
