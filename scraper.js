@@ -4,26 +4,10 @@
 //     Assume that the the column headers in the CSV need to be in a certain order to be correctly entered into a database. They should be in this order: Title, Price, ImageURL, URL, and Time
 // The CSV file should be saved inside the ‘data’ folder.
 
-const scrape = require('website-scraper');
-const json2csv = require("json2csv");
+'use strict';
+const cheerio = require('cheerio');
+const request = require('request');
+const json2csv = require('json2csv');
 const fs = require('fs');
 
-// Setup for website-scraper
-const options = {
-    urls: ['http://www.shirts4mike.com/shirts.php'],
-    directory: 'data/'
-};
-
-scrape(options).then((result) => {
-    console.log(result);
-    pullInfo("data/index.html");
-}).catch((err) => {
-    console.log(`There's been an error: ${err}`);
-});
-
-function pullInfo(filePath) {
-    let fileContent = fs.readFileSync(filePath, {encoding: "utf8");
-    console.log(fileContent);
-
-}
 

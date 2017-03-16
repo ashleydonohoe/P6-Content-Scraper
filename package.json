@@ -9,7 +9,8 @@
   "author": "Ashley Donohoe",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^0.22.0",
     "json2csv": "^3.7.3",
-    "website-scraper": "^2.2.2"
+    "request": "^2.81.0"
   }
 }
